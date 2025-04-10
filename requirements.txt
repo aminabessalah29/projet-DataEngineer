@@ -1,0 +1,3 @@
+#ce fichier liste les dépendances du python
+pandas
+numpy

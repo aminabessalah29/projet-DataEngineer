@@ -1,0 +1,23 @@
+services:
+  # Service qui exécute l'application
+  data-engineer-app:
+    # Construire l'image à partir du Dockerfile
+    build: .
+    container_name: data_engineer_container
+    volumes:
+      # Monter les répertoires locaux dans le conteneur (à gauche: chemin sur l'hôte, à droite: chemin dans le conteneur)
+      - ./DATA:/app/DATA
+      - ./BD:/app/BD
+      - ./SCR:/app/SCR
+    working_dir: /app  # Définir le répertoire de travail
+
+    environment:   # Corrigé "envirenement" en "environment"
+      - PATH_VENTES=/app/DATA/Données_brief_data_engineer_ventes.csv
+      - PATH_PRODUITS=/app/DATA/Données_brief_data_engineer_produits.csv
+      - PATH_MAGASINS=/app/DATA/Données_brief_data_engineer_magasins.csv
+
+    # Commande à exécuter dans le conteneur
+    command: bash -c "python /app/SCR/create_schema.py && python /app/SCR/import_data.py"
+    stdin_open: true    # Garder l'entrée standard ouverte (utile pour le débogage)
+    tty: true           # Allouer un pseudo-TTY (utile pour voir les logs)
+    restart: unless-stopped   #garantit que le conteneur redémarre en cas de crash
