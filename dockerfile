@@ -1,5 +1,5 @@
 # Utiliser la dernière image stable de Python 3.13.2
-FROM python:3.13.2-slim
+FROM python:3.13.2
 
 # Mettre à jour les paquets et installer bash
 RUN apt-get update && apt-get install -y bash \
@@ -12,7 +12,7 @@ WORKDIR /app
 COPY ./SCR /app/SCR
 COPY ./DATA /app/DATA
 COPY ./BD /app/BD
-COPY .requirements.txt /app/requirements.txt
+COPY requirements.txt /app/requirements.txt
 
 # Définir les variables d'environnement
 ENV PATH_VENTES=/app/DATA/Données_brief_data_engineer_ventes.csv \
